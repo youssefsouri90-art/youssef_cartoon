@@ -1,5 +1,4 @@
 buildscript {
-    // هنا نترك المستودعات فقط لأنها ضرورية لـ Plugins
     repositories {
         google()
         mavenCentral()
@@ -12,4 +11,4 @@ buildscript {
     }
 }
 
-// قمنا بحذف بلوك allprojects { repositories { ... } } لأنه يسبب التعارض
+// ملاحظة: لا تضع بلوك allprojects هنا لمنع التعارض مع settings.gradle.kts
