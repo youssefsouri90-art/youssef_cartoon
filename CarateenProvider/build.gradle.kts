@@ -1,12 +1,13 @@
 import com.android.build.gradle.LibraryExtension
 import com.lagradost.cloudstream3.gradle.CloudstreamExtension
+// السطر التالي هو الحل لخطأ Unresolved reference
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 apply(plugin = "com.android.library")
 apply(plugin = "kotlin-android")
 apply(plugin = "com.lagradost.cloudstream3.gradle")
 
 configure<CloudstreamExtension> {
-    // تأكد من وضع اسم مستودعك هنا بدلاً من "youssef_cartoon" إذا كان مختلفاً
     setRepo(System.getenv("GITHUB_REPOSITORY") ?: "youssef_cartoon")
 }
 
@@ -22,7 +23,10 @@ configure<LibraryExtension> {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+}
 
+// هذه الطريقة بديلة وأكثر استقراراً لتحديد نسخة الـ JVM في Gradle 8.7
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
         jvmTarget = "1.8"
     }
