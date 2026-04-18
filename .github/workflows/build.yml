@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # يسمح لك بتشغيل البناء يدوياً
+  workflow_dispatch:
 
 jobs:
   build:
@@ -20,8 +20,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7' # تحديد النسخة المستقرة هنا
 
       - name: Build with Gradle
-        # بما أن gradlew غير موجود، سنستخدم 'gradle' المثبت في النظام مباشرة
         run: gradle CarateenProvider:make
