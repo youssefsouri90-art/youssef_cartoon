@@ -1,4 +1,4 @@
-import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryExtension
 import com.lagradost.cloudstream3.gradle.CloudstreamExtension
 
 apply(plugin = "com.android.library")
@@ -6,12 +6,13 @@ apply(plugin = "kotlin-android")
 apply(plugin = "com.lagradost.cloudstream3.gradle")
 
 configure<CloudstreamExtension> {
-    setRepo(System.getenv("GITHUB_REPOSITORY") ?: "youssefsouri90-art/carateen-extension")
+    // تأكد من وضع اسم مستودعك هنا بدلاً من "youssef_cartoon" إذا كان مختلفاً
+    setRepo(System.getenv("GITHUB_REPOSITORY") ?: "youssef_cartoon")
 }
 
-configure<BaseExtension> {
+configure<LibraryExtension> {
     namespace = "com.momen.carateen"
-    compileSdkVersion(34)
+    compileSdk = 34
 
     defaultConfig {
         minSdk = 21
@@ -20,6 +21,10 @@ configure<BaseExtension> {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 }
 
