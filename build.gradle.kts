@@ -1,4 +1,5 @@
 buildscript {
+    // هنا نترك المستودعات فقط لأنها ضرورية لـ Plugins
     repositories {
         google()
         mavenCentral()
@@ -11,10 +12,4 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven("https://jitpack.io")
-    }
-}
+// قمنا بحذف بلوك allprojects { repositories { ... } } لأنه يسبب التعارض
