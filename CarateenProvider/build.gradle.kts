@@ -19,7 +19,7 @@ configure<LibraryExtension> {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    // تعطيل استخراج التنبيهات لحل مشكلة التوقف عند 90%
+    // هذا السطر سيحل مشكلة الفشل عند مهمة extractDebugAnnotations
     buildFeatures {
         resValues = true
     }
@@ -32,15 +32,9 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    // ربط مكتبة Cloudstream الأساسية
-    "compileOnly"("com.github.lagradost:cloudstream3:master-SNAPSHOT")
+    // استخدمنا نسخة رقمية ثابتة هنا لتجنب خطأ 401 من JitPack
+    "compileOnly"("com.github.lagradost:cloudstream3:3.0.1")
     
-    // المكتبات اللازمة لسحب وتحليل محتوى موقع كاراطين
     "implementation"("org.jsoup:jsoup:1.17.2")
     "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
-}
-
-// إنشاء مهمة بناء يدوية لتوليد ملف الإضافة
-tasks.register("make") {
-    dependsOn("assembleDebug")
 }
