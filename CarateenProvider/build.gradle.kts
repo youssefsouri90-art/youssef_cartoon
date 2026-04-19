@@ -1,7 +1,6 @@
 import com.android.build.gradle.LibraryExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-// سنستخدم إضافات الأندرويد الأساسية فقط ونتجنب إضافة كلاود ستريم المتعطلة حالياً
 apply(plugin = "com.android.library")
 apply(plugin = "kotlin-android")
 
@@ -26,8 +25,8 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    // تحميل المكتبة مباشرة من JitPack لتجنب خطأ الـ JAR
-    compileOnly("com.github.lagradost:cloudstream3:master-SNAPSHOT")
-    implementation("org.jsoup:jsoup:1.17.2")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
+    // استخدام "add" يضمن أن Gradle سيفهم الأمر مهما كان إصداره
+    add("compileOnly", "com.github.lagradost:cloudstream3:master-SNAPSHOT")
+    add("implementation", "org.jsoup:jsoup:1.17.2")
+    add("implementation", "com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
 }
