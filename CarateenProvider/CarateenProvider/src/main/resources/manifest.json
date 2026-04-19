@@ -1,8 +1,0 @@
-{
-  "name": "Carateen",
-  "pluginClassName": "com.momen.CarateenPlugin",
-  "version": 1,
-  "description": "إضافة لموقع كاراطين",
-  "author": "Momen",
-  "requiresResources": false
-}
