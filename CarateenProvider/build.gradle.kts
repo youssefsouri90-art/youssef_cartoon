@@ -9,16 +9,38 @@ plugins {
 configure<LibraryExtension> {
     namespace = "com.momen.carateen"
     compileSdk = 34
-    defaultConfig { minSdk = 21 }
+
+    defaultConfig {
+        minSdk = 21
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    // تعطيل استخراج التنبيهات لحل مشكلة التوقف عند 90%
+    buildFeatures {
+        resValues = true
+    }
+}
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
-    // هذه النسخة متاحة للجميع ولا تتطلب تسجيل دخول (تتخطى خطأ 401)
-    "compileOnly"("com.lagradost:cloudstream3:3.2.1") 
+    // ربط مكتبة Cloudstream الأساسية
+    "compileOnly"("com.github.lagradost:cloudstream3:master-SNAPSHOT")
+    
+    // المكتبات اللازمة لسحب وتحليل محتوى موقع كاراطين
     "implementation"("org.jsoup:jsoup:1.17.2")
     "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions { jvmTarget = "1.8" }
+// إنشاء مهمة بناء يدوية لتوليد ملف الإضافة
+tasks.register("make") {
+    dependsOn("assembleDebug")
 }
