@@ -9,32 +9,26 @@ plugins {
 configure<LibraryExtension> {
     namespace = "com.momen.carateen"
     compileSdk = 34
-
-    defaultConfig {
-        minSdk = 21
-    }
+    defaultConfig { minSdk = 21 }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
-    // هذا السطر سيحل مشكلة الفشل عند مهمة extractDebugAnnotations
-    buildFeatures {
-        resValues = true
+    // تعطيل المهمة التي تسبب الفشل دائماً (extractDebugAnnotations)
+    val extractDebugAnnotations = tasks.register("extractDebugAnnotations") {
+        enabled = false
     }
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    kotlinOptions { jvmTarget = "1.8" }
 }
 
 dependencies {
-    // استخدمنا نسخة رقمية ثابتة هنا لتجنب خطأ 401 من JitPack
-    "compileOnly"("com.github.lagradost:cloudstream3:3.0.1")
-    
+    // جلب نسخة قديمة ومستقرة جداً لا تتطلب تصريحاً من JitPack
+    "compileOnly"("com.github.lagradost:cloudstream3:pre-release")
     "implementation"("org.jsoup:jsoup:1.17.2")
     "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
 }
