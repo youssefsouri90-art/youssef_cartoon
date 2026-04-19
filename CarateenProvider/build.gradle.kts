@@ -1,13 +1,12 @@
 import com.lagradost.cloudstream3.gradle.CloudstreamExtension
 
-plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("com.lagradost.cloudstream3.gradle")
-}
+// استخدام "apply plugin" بدلاً من بلوك "plugins" لتوافق أفضل مع buildscript
+apply(plugin = "com.android.library")
+apply(plugin = "kotlin-android")
+apply(plugin = "com.lagradost.cloudstream3.gradle")
 
 configure<CloudstreamExtension> {
-    // يجب أن يطابق الكلاس الموجود في ملف CarateenPlugin.kt
+    // تأكد أن الكلاس يطابق ما هو موجود في ملف CarateenPlugin.kt
     setProviderClass("com.momen.CarateenPlugin")
 }
 
