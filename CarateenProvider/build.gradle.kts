@@ -11,14 +11,10 @@ configure<CloudstreamExtension> {
     setRepo(System.getenv("GITHUB_REPOSITORY") ?: "youssef_cartoon")
 }
 
-configure<LibraryExtension> {
-    namespace = "com.momen.carateen"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 21
-    }
-
+configure<CloudstreamExtension> {
+    setRepo(System.getenv("GITHUB_REPOSITORY") ?: "youssef_cartoon")
+    // لا نضع إعدادات إضافية هنا لتقليل احتمالية الخطأ
+}
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -35,7 +31,14 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    add("cloudstream", "com.github.lagradost:cloudstream3:3.5.0") 
+    // الطريقة البديلة والأكثر استقراراً لجلب مكتبة كلاود ستريم
+    val libVersion = "master-SNAPSHOT" 
+    add("implementation", "com.github.lagradost:cloudstream3:$libVersion")
+    
+    // تأكد من أن هذه المكتبات موجودة أيضاً
     add("implementation", "org.jsoup:jsoup:1.17.2")
     add("implementation", "com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
+    
+    // سطر إضافي لضمان عدم البحث عن JAR خارجي إذا فشل التقييم
+    compileOnly("com.github.lagradost:cloudstream3:$libVersion")
 }
