@@ -4,6 +4,6 @@
     "authors": ["Momen"],
     "version": 1,
     "apiVersion": 1,
-    "tvTypes": ["Anime", "Cartoon"],
+    "tvTypes": ["Cartoon"],
     "language": "ar"
 }
