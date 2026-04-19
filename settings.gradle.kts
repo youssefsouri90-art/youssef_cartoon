@@ -11,9 +11,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // إضافة مستودع البديل لـ JitPack
         maven { url = uri("https://jitpack.io") }
-        maven { url = uri("https://repo.recloudstream.org/repository/maven-public/") }
     }
 }
 
