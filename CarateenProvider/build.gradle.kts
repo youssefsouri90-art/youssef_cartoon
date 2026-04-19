@@ -1,11 +1,13 @@
 import com.lagradost.cloudstream3.gradle.CloudstreamExtension
 
-apply(plugin = "com.android.library")
-apply(plugin = "kotlin-android")
-apply(plugin = "com.lagradost.cloudstream3.gradle")
+plugins {
+    id("com.android.library")
+    id("kotlin-android")
+    id("com.lagradost.cloudstream3.gradle")
+}
 
 configure<CloudstreamExtension> {
-    // تأكد أن هذا المسار يطابق الكلاس في ملف CarateenPlugin.kt
+    // يجب أن يطابق الكلاس الموجود في ملف CarateenPlugin.kt
     setProviderClass("com.momen.CarateenPlugin")
 }
 
