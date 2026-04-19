@@ -15,11 +15,13 @@ configure<LibraryExtension> {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-}
 
-// حل مشكلة المهام المتكررة وتعطيل المهمة التي تسبب الفشل
-tasks.withType<com.android.build.gradle.tasks.ExtractAnnotations> {
-    enabled = false
+    // هذا التعديل سيحذف الخطأ الأخير (syncDebugLibJars)
+    buildFeatures {
+        resValues = true
+        viewBinding = false
+        dataBinding = false
+    }
 }
 
 tasks.withType<KotlinCompile>().configureEach {
@@ -27,7 +29,7 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    // استخدمنا نسخة ثابتة تتخطى حجب JitPack
+    // استخدام النسخة الثابتة التي نجحت في التحميل
     "compileOnly"("com.github.lagradost:cloudstream3:3.0.0")
     "implementation"("org.jsoup:jsoup:1.17.2")
     "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
