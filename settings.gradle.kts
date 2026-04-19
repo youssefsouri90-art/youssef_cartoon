@@ -8,7 +8,8 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    // هذا السطر يسمح للمشروع باستخدام المستودعات المعرفة في build.gradle
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google()
         mavenCentral()
