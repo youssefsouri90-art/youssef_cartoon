@@ -7,7 +7,6 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    // إجبار النظام على استخدام هذه المستودعات فقط لمنع تعارض الـ Unauthorized
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
@@ -15,6 +14,4 @@ dependencyResolutionManagement {
         maven { url = uri("https://jitpack.io") }
     }
 }
-
-rootProject.name = "youssef_cartoon"
 include(":CarateenProvider")
