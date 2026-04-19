@@ -35,10 +35,8 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    // استخدمنا الاسم مباشرة لتجنب خطأ "already exists"
-    add("cloudstream", "com.github.lagradost:cloudstream3:master-SNAPSHOT")
-    
-    // المكتبات المساعدة لجلب البيانات وتحليل النصوص
+    // نستخدم نسخة محددة بدلاً من الماستر إذا استمرت مشكلة الـ JAR
+    add("cloudstream", "com.github.lagradost:cloudstream3:3.5.0") 
     add("implementation", "org.jsoup:jsoup:1.17.2")
     add("implementation", "com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
 }
