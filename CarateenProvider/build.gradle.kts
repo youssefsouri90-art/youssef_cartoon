@@ -17,7 +17,22 @@ configure<LibraryExtension> {
     }
 }
 
-// هذه هي الطريقة الصحيحة والآمنة لتعطيل المهمة دون حذفها
+// الخدعة البرمجية: إنشاء الملف المفقود يدوياً لإرضاء Gradle
+tasks.register("createMissingTypedefs") {
+    doFirst {
+        val file = file("build/intermediates/annotations_typedef_file/debug/typedefs.txt")
+        if (!file.exists()) {
+            file.parentFile.mkdirs()
+            file.writeText("") // إنشاء ملف فارغ
+        }
+    }
+}
+
+// إجبار المهمة الفاشلة على الانتظار حتى ننشئ الملف
+tasks.named("syncDebugLibJars") {
+    dependsOn("createMissingTypedefs")
+}
+
 tasks.configureEach {
     if (name == "extractDebugAnnotations") {
         enabled = false
@@ -29,7 +44,6 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    // استخدمنا الإصدار v3.0.1 مع المسار الكامل (هذا الإصدار موجود ومستقر)
     "compileOnly"("com.github.lagradost:cloudstream3:v3.0.1")
     "implementation"("org.jsoup:jsoup:1.17.2")
     "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
