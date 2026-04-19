@@ -1,4 +1,4 @@
-name: Build Plugin
+name: Build and Release Plugin
 
 on:
   push:
@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,10 +27,24 @@ jobs:
       - name: Build with Gradle
         run: |
           chmod +x gradlew
+          # أمر بناء الإضافة بصيغة .cs3
           ./gradlew :CarateenProvider:make
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: CarateenPlugin
+          # المسار الذي يتواجد فيه ملف الإضافة بعد البناء
           path: CarateenProvider/build/outputs/aar/*.cs3
+
+      - name: Release Plugin
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: CarateenProvider/build/outputs/aar/*.cs3
+          tag_name: v${{ github.run_number }}
+          name: Release v${{ github.run_number }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
