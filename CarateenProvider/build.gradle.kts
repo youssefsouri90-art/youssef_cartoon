@@ -17,15 +17,20 @@ configure<LibraryExtension> {
     }
 }
 
-// حذفنا محاولة الوصول لمهمة extractDebugAnnotations لأنها غير موجودة في هذه النسخة
+// هذه هي الطريقة الصحيحة والآمنة لتعطيل المهمة دون حذفها
+tasks.configureEach {
+    if (name == "extractDebugAnnotations") {
+        enabled = false
+    }
+}
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions { jvmTarget = "1.8" }
 }
 
 dependencies {
-    // النسخة التي نجحت في التحميل
-    "compileOnly"("com.lagradost:cloudstream3:3.0.0")
+    // استخدمنا الإصدار v3.0.1 مع المسار الكامل (هذا الإصدار موجود ومستقر)
+    "compileOnly"("com.github.lagradost:cloudstream3:v3.0.1")
     "implementation"("org.jsoup:jsoup:1.17.2")
     "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
 }
