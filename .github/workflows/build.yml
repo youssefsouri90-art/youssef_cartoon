@@ -21,9 +21,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 8.5 # سيقوم هذا السطر بتحميل Gradle تلقائياً
+          gradle-version: 8.5
 
       - name: Build with Gradle
         run: |
-          # سنستخدم 'gradle' مباشرة بدلاً من './gradlew' لتجنب مشاكل الملفات المفقودة
-          gradle :CarateenProvider:make
+          # إضافة --refresh-dependencies لتجاوز أخطاء 401 السابقة المخزنة
+          gradle :CarateenProvider:make --refresh-dependencies
