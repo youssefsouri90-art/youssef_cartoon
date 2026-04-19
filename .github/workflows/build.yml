@@ -28,3 +28,10 @@ jobs:
       # بناء الإضافة مباشرة باستخدام النظام المثبت بدلاً من gradlew المفقود
       - name: Build Carateen Extension
         run: gradle :CarateenProvider:assembleDebug
+
+      # نضعه هنا (بعد عملية البناء مباشرة) لرفع الملف الناتج
+      - name: Upload Extension File
+        uses: actions/upload-artifact@v4
+        with:
+          name: Carateen-Plugin
+          path: CarateenProvider/build/outputs/aar/*.aar
