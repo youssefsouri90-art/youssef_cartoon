@@ -1,4 +1,3 @@
-// ملف: /build.gradle.kts (المجلد الرئيسي)
 buildscript {
     repositories {
         google()
@@ -10,10 +9,4 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
-    }
-}
+// حذفنا allprojects من هنا لأننا وضعناها في settings.gradle.kts
