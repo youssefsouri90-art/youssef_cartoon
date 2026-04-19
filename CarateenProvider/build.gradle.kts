@@ -17,8 +17,8 @@ configure<LibraryExtension> {
     }
 }
 
-// بدلاً من register سنستخدم named لضبط المهمة الموجودة أصلاً وتعطيلها
-tasks.named("extractDebugAnnotations") {
+// حل مشكلة المهام المتكررة وتعطيل المهمة التي تسبب الفشل
+tasks.withType<com.android.build.gradle.tasks.ExtractAnnotations> {
     enabled = false
 }
 
@@ -27,8 +27,8 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    // نعود للنسخة المستقرة التي تم التعرف عليها بنجاح
-    "compileOnly"("com.github.lagradost:cloudstream3:master-SNAPSHOT")
+    // استخدمنا نسخة ثابتة تتخطى حجب JitPack
+    "compileOnly"("com.github.lagradost:cloudstream3:3.0.0")
     "implementation"("org.jsoup:jsoup:1.17.2")
     "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
 }
