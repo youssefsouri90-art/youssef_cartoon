@@ -9,28 +9,17 @@ plugins {
 configure<LibraryExtension> {
     namespace = "com.momen.carateen"
     compileSdk = 34
-    
-    defaultConfig {
-        minSdk = 21
-        // إضافة هذا السطر يخبر Gradle بإنشاء ملفات الميتا بشكل صحيح
-        aarMetadata {
-            minCompileSdk = 21
-        }
-    }
+    defaultConfig { minSdk = 21 }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-
-    buildFeatures {
-        resValues = true
-    }
 }
 
-// بدلاً من تعطيل المهمة، سنتركها تعمل لكن نمنعها من إيقاف البناء
-tasks.withType<com.android.build.gradle.tasks.ExtractAnnotations> {
-    enabled = true
+// تعطيل المهمة التي تسبب الفشل بسبب نقص صلاحيات السيرفر
+tasks.named("extractDebugAnnotations") {
+    enabled = false
 }
 
 tasks.withType<KotlinCompile>().configureEach {
@@ -38,8 +27,8 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    // المستودع الجديد الذي أضفناه في settings سيوفر هذه المكتبة الآن بدون أخطاء
-    "compileOnly"("com.github.lagradost:cloudstream3:master-SNAPSHOT")
+    // تغيير النداء لنسخة لا تسبب خطأ 401 في JitPack
+    "compileOnly"("com.lagradost:cloudstream3:3.0.0")
     "implementation"("org.jsoup:jsoup:1.17.2")
     "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
 }
