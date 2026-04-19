@@ -7,18 +7,14 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    // هذا السطر يمنع التعارض بين ملف الإعدادات وملفات البناء الأخرى
+    // إجبار النظام على استخدام هذه المستودعات فقط لمنع تعارض الـ Unauthorized
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
-        // هذا هو المستودع الضروري لجلب مكتبة Cloudstream
-        maven("https://jitpack.io") 
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
-// اسم المشروع (يمكنك تركه كما هو أو تغييره)
 rootProject.name = "youssef_cartoon"
-
-// التأكد من تضمين مجلد الإضافة في عملية البناء
 include(":CarateenProvider")
