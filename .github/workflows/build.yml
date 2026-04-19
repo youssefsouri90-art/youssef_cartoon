@@ -1,4 +1,4 @@
-name: Build Extension
+name: Build Plugin
 
 on:
   push:
@@ -19,19 +19,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # إجبار النظام على استخدام إصدار Gradle 8.7 تحديداً
-      - name: Setup Gradle 8.7
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.7'
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-      # بناء الإضافة مباشرة باستخدام النظام المثبت بدلاً من gradlew المفقود
-      - name: Build Carateen Extension
-        run: gradle :CarateenProvider:assembleDebug
+      - name: Build with Gradle
+        run: |
+          chmod +x gradlew
+          ./gradlew :CarateenProvider:make
 
-      # نضعه هنا (بعد عملية البناء مباشرة) لرفع الملف الناتج
-      - name: Upload Extension File
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Carateen-Plugin
-          path: CarateenProvider/build/outputs/aar/*.aar
+          name: CarateenPlugin
+          path: CarateenProvider/build/outputs/aar/*.cs3
