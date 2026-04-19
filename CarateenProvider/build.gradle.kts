@@ -17,17 +17,14 @@ configure<LibraryExtension> {
     }
 }
 
-// تعطيل المهمة التي تسبب الفشل بسبب نقص صلاحيات السيرفر
-tasks.named("extractDebugAnnotations") {
-    enabled = false
-}
+// حذفنا محاولة الوصول لمهمة extractDebugAnnotations لأنها غير موجودة في هذه النسخة
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions { jvmTarget = "1.8" }
 }
 
 dependencies {
-    // تغيير النداء لنسخة لا تسبب خطأ 401 في JitPack
+    // النسخة التي نجحت في التحميل
     "compileOnly"("com.lagradost:cloudstream3:3.0.0")
     "implementation"("org.jsoup:jsoup:1.17.2")
     "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
