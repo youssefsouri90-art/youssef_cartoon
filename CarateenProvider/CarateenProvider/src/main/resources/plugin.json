@@ -1,9 +1,11 @@
 {
     "name": "Carateen",
-    "description": "إضافة موقع كاراطين لمشاهدة الأنمي والكرتون",
+    "description": "إضافة موقع كاراطين لمشاهدة الأنمي والكرتون المدبلج",
     "authors": ["Momen"],
     "version": 1,
     "apiVersion": 1,
     "tvTypes": ["Cartoon"],
-    "language": "ar"
+    "language": "ar",
+    "iconUrl": "https://carateen.tv/favicon.ico",
+    "providerClass": "com.momen.CarateenPlugin"
 }
