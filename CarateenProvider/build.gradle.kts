@@ -15,13 +15,11 @@ configure<LibraryExtension> {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+}
 
-    // هذا التعديل سيحذف الخطأ الأخير (syncDebugLibJars)
-    buildFeatures {
-        resValues = true
-        viewBinding = false
-        dataBinding = false
-    }
+// تعطيل المهمة التي تسبب الفشل دائماً بسبب نقص الصلاحيات
+tasks.withType<com.android.build.gradle.tasks.ExtractAnnotations> {
+    enabled = false
 }
 
 tasks.withType<KotlinCompile>().configureEach {
@@ -29,8 +27,10 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    // استخدام النسخة الثابتة التي نجحت في التحميل
-    "compileOnly"("com.github.lagradost:cloudstream3:3.0.0")
-    "implementation"("org.jsoup:jsoup:1.17.2")
-    "implementation"("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
+    // جلب المكتبات التي لا تسبب مشاكل من الإنترنت
+    implementation("org.jsoup:jsoup:1.17.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
+    
+    // بدلاً من JitPack، سنخبره أن المكتبة موجودة في الإنترنت برابط مباشر لا يحتاج تصريح
+    compileOnly("com.github.lagradost:cloudstream3:master-SNAPSHOT") 
 }
