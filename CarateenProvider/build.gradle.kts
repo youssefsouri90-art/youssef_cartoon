@@ -7,38 +7,34 @@ apply(plugin = "kotlin-android")
 apply(plugin = "com.lagradost.cloudstream3.gradle")
 
 configure<CloudstreamExtension> {
-    // سيقوم النظام بجلب اسم المستودع تلقائياً
     setRepo(System.getenv("GITHUB_REPOSITORY") ?: "youssef_cartoon")
 }
 
-configure<CloudstreamExtension> {
-    setRepo(System.getenv("GITHUB_REPOSITORY") ?: "youssef_cartoon")
-    // لا نضع إعدادات إضافية هنا لتقليل احتمالية الخطأ
-}
+configure<LibraryExtension> {
+    namespace = "com.momen.carateen"
+    compileSdk = 34
+
+    defaultConfig {
+        minSdk = 21
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
-// حل مشكلة jvmTarget و Unresolved reference: kotlinOptions
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
         jvmTarget = "1.8"
-        // إيقاف التحذيرات التي قد تعيق البناء
         freeCompilerArgs = freeCompilerArgs + "-Xjvm-default=all"
     }
 }
 
 dependencies {
-    // الطريقة البديلة والأكثر استقراراً لجلب مكتبة كلاود ستريم
-    val libVersion = "master-SNAPSHOT" 
-    add("implementation", "com.github.lagradost:cloudstream3:$libVersion")
+    val cloudstream by configurations.getting
+    add(cloudstream.name, "com.github.lagradost:cloudstream3:master-SNAPSHOT")
     
-    // تأكد من أن هذه المكتبات موجودة أيضاً
     add("implementation", "org.jsoup:jsoup:1.17.2")
     add("implementation", "com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
-    
-    // سطر إضافي لضمان عدم البحث عن JAR خارجي إذا فشل التقييم
-    compileOnly("com.github.lagradost:cloudstream3:$libVersion")
 }
