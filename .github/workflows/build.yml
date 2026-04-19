@@ -1,16 +1,13 @@
-name: Build and Release Plugin
+name: Build Plugin
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,30 +18,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: 8.5 # سيقوم هذا السطر بتحميل Gradle تلقائياً
 
       - name: Build with Gradle
         run: |
-          chmod +x gradlew
-          # أمر بناء الإضافة بصيغة .cs3
-          ./gradlew :CarateenProvider:make
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: CarateenPlugin
-          # المسار الذي يتواجد فيه ملف الإضافة بعد البناء
-          path: CarateenProvider/build/outputs/aar/*.cs3
-
-      - name: Release Plugin
-        if: github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v1
-        with:
-          files: CarateenProvider/build/outputs/aar/*.cs3
-          tag_name: v${{ github.run_number }}
-          name: Release v${{ github.run_number }}
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # سنستخدم 'gradle' مباشرة بدلاً من './gradlew' لتجنب مشاكل الملفات المفقودة
+          gradle :CarateenProvider:make
