@@ -7,14 +7,18 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
-    // هذا السطر يخبره أن يستخدم هذه المستودعات لكل المشروع
+    // هذا السطر يمنع التعارض بين ملف الإعدادات وملفات البناء الأخرى
     repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
     repositories {
         google()
         mavenCentral()
-        maven("https://jitpack.io")
+        // هذا هو المستودع الضروري لجلب مكتبة Cloudstream
+        maven("https://jitpack.io") 
     }
 }
 
-rootProject.name = "carateen-extension"
+// اسم المشروع (يمكنك تركه كما هو أو تغييره)
+rootProject.name = "youssef_cartoon"
+
+// التأكد من تضمين مجلد الإضافة في عملية البناء
 include(":CarateenProvider")
