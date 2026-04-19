@@ -19,14 +19,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # هذه الخطوة ستقوم بإنشاء ملف التشغيل إذا كان مفقوداً
-      - name: Initialize Gradle Wrapper
-        run: gradle wrapper
+      # إجبار النظام على استخدام إصدار Gradle 8.7 تحديداً
+      - name: Setup Gradle 8.7
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
 
-      # إعطاء صلاحية التنفيذ للملف
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
+      # بناء الإضافة مباشرة باستخدام النظام المثبت بدلاً من gradlew المفقود
       - name: Build Carateen Extension
-        # تشغيل البناء باستخدام الملف الذي أنشأناه
-        run: ./gradlew :CarateenProvider:assembleDebug
+        run: gradle :CarateenProvider:assembleDebug
