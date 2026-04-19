@@ -17,23 +17,18 @@ configure<LibraryExtension> {
     }
 }
 
-// الخدعة البرمجية: إنشاء الملف المفقود يدوياً لإرضاء Gradle
-tasks.register("createMissingTypedefs") {
-    doFirst {
-        val file = file("build/intermediates/annotations_typedef_file/debug/typedefs.txt")
-        if (!file.exists()) {
-            file.parentFile.mkdirs()
-            file.writeText("") // إنشاء ملف فارغ
+// حل عبقري: إنشاء الملف المفقود عند بداية أي عملية بناء لإسكات Gradle
+tasks.configureEach {
+    if (name.contains("prepare", ignoreCase = true) || name.contains("generate", ignoreCase = true)) {
+        doLast {
+            val typedefsFile = file("build/intermediates/annotations_typedef_file/debug/typedefs.txt")
+            if (!typedefsFile.exists()) {
+                typedefsFile.parentFile.mkdirs()
+                typedefsFile.writeText("")
+            }
         }
     }
-}
-
-// إجبار المهمة الفاشلة على الانتظار حتى ننشئ الملف
-tasks.named("syncDebugLibJars") {
-    dependsOn("createMissingTypedefs")
-}
-
-tasks.configureEach {
+    // تعطيل المهمة المزعجة إذا وجدت
     if (name == "extractDebugAnnotations") {
         enabled = false
     }
