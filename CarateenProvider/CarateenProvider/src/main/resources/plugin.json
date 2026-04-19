@@ -1,21 +1,10 @@
-pluginManagement {
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-        maven("https://jitpack.io")
-    }
+{
+  "name": "Carateen",
+  "description": "إضافة موقع كاراطين لمشاهدة الأنمي والكرتون",
+  "authors": ["Momen"],
+  "version": 1,
+  "apiVersion": 1,
+  "tvTypes": ["Cartoon"],
+  "language": "ar",
+  "providerClass": "com.momen.CarateenPlugin"
 }
-
-dependencyResolutionManagement {
-    // تم تغيير هذا السطر للسماح للمشاريع بتعريف مستودعاتها الخاصة إذا لزم الأمر
-    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
-    repositories {
-        google()
-        mavenCentral()
-        maven("https://jitpack.io")
-    }
-}
-
-rootProject.name = "youssef_cartoon"
-include(":CarateenProvider")
